@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Field.h"
 
 class Game
 {
@@ -10,7 +11,7 @@ public:
 	Game();
 	~Game();
 
-	void run(int framePerSeconds = 60);
+	void run(int minimumFramePerSeconds = 60);
 
 private:
 	void processEvents();
@@ -18,6 +19,7 @@ private:
 	void render();
 
 	sf::RenderWindow _window;
-	sf::CircleShape _player;
+	Field _field;
+
 };
 

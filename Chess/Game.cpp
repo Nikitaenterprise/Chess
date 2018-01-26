@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 Game::Game() : _window(sf::VideoMode(800,600),"Game"), _player(150)
 {
 	_player.setFillColor(sf::Color::Green);
@@ -12,29 +13,26 @@ Game::~Game()
 }
 
 
-void Game::run(int framePerSeconds)
+void Game::run(int minimumFramePerSeconds)
 {
 	sf::Clock clock;
-	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	sf::Time timePerFrame = sf::seconds(double(1) / framePerSeconds);
-	std::cout << "timeSinceLastUpdate = " << timeSinceLastUpdate.asMilliseconds() << std::endl;
-	std::cout << "timePerFrame = " << timePerFrame.asMilliseconds() << std::endl;
+	sf::Time timeSinceLastUpdate;
+	sf::Time timePerFrame = sf::seconds(double(1) / minimumFramePerSeconds);
 	while (_window.isOpen())
 	{
 		processEvents();
-		bool repaint = false;
-
-		timeSinceLastUpdate += clock.restart();
+		timeSinceLastUpdate = clock.restart();
 		
 		while (timeSinceLastUpdate > timePerFrame)
 		{
 			timeSinceLastUpdate -= timePerFrame;
-			repaint = true;
 			update(timePerFrame);
 		}
-		if (repaint) render();
+		update(timeSinceLastUpdate);
+		render();
 	}
 }
+
 
 void Game::processEvents()
 {
@@ -45,19 +43,20 @@ void Game::processEvents()
 		{
 			_window.close();
 		}
+		_field.processEvents();
 	}
 }
 
 
 void Game::update(sf::Time deltaTime)
 {
-
+	_field.update(deltaTime);
 }
 
 
 void Game::render()
 {
 	_window.clear();
-	_window.draw(_player);
+	_window.draw(_field);
 	_window.display();
 }
