@@ -1,7 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 #include "Field.h"
+#include "Figure.h"
 
 class Game
 {
@@ -20,6 +22,6 @@ private:
 
 	sf::RenderWindow _window;
 	Field _field;
-
+	std::vector<Figure*> _figures;
 };
 

@@ -11,6 +11,10 @@ public:
 
 	void processEvents();
 	void update(sf::Time deltaTime);
+	void setScale(const sf::Vector2f &vec);
+	sf::Vector2u getSizeOfTexture();
+	void setSpriteFromTexture(const sf::Texture &texture);
+	void setStartPosition(const sf::Vector2f &vec);
 	bool isClicked;
 
 private:

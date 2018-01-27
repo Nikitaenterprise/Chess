@@ -1,23 +1,24 @@
 #include "Game.h"
 
 
-Game::Game() : _window(sf::VideoMode(800,600),"Game"), _player(150)
+Game::Game() : _window(sf::VideoMode(800,800),"Game")
 {
-	_player.setFillColor(sf::Color::Green);
-	_player.setPosition(10, 20);
-}
+	_field.setScale(sf::Vector2f(1.0f / (float(_field.getSizeOfTexture().x) / float(_window.getSize().x)), 
+								1.0f / (float(_field.getSizeOfTexture().y) / float(_window.getSize().y))));
+	_field.setStartPosition(sf::Vector2f(0, 0));
 
+	
+}
 
 Game::~Game()
 {
 }
 
-
 void Game::run(int minimumFramePerSeconds)
 {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate;
-	sf::Time timePerFrame = sf::seconds(double(1) / minimumFramePerSeconds);
+	sf::Time timePerFrame = sf::seconds(float(1) / minimumFramePerSeconds);
 	while (_window.isOpen())
 	{
 		processEvents();
@@ -33,7 +34,6 @@ void Game::run(int minimumFramePerSeconds)
 	}
 }
 
-
 void Game::processEvents()
 {
 	sf::Event event;
@@ -47,12 +47,10 @@ void Game::processEvents()
 	}
 }
 
-
 void Game::update(sf::Time deltaTime)
 {
 	_field.update(deltaTime);
 }
-
 
 void Game::render()
 {
