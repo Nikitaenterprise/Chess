@@ -5,6 +5,9 @@
 #include "Field.h"
 #include "Figure.h"
 
+#define HEIGHT 800
+#define WIDTH 800
+
 class Game
 {
 public:

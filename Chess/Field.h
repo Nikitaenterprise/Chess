@@ -16,9 +16,9 @@ public:
 	void setSpriteFromTexture(const sf::Texture &texture);
 	void setStartPosition(const sf::Vector2f &vec);
 	bool isClicked;
+	virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
 
-private:
-	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+protected:
 	sf::Image _image;
 	sf::Texture _texture;
 	sf::Sprite _sprite;
