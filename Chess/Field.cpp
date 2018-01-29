@@ -1,10 +1,11 @@
 #include "Field.h"
-
+#include <iostream>
 Field::Field()
 {
 	_image.loadFromFile("../Chess/Images/chessboard.png");
 	_texture.loadFromImage(_image);
 	_sprite.setTexture(_texture);
+	std::cout << "hi\n";
 }
 
 Field::~Field()
