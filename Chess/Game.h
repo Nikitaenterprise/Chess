@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "Element.h"
 #include "Field.h"
 #include "Figure.h"
 

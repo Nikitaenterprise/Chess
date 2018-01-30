@@ -17,3 +17,8 @@ Figure::Figure(const std::string &name, const std::string &color)
 Figure::~Figure()
 {
 }
+
+void Figure::draw(sf::RenderTarget & target, sf::RenderStates states) const
+{
+	target.draw(_sprite, states);
+}

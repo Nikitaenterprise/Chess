@@ -1,11 +1,30 @@
 #include "Field.h"
-#include <iostream>
+
 Field::Field()
 {
-	_image.loadFromFile("../Chess/Images/chessboard.png");
+	/*_image.loadFromFile("../Chess/Images/chessboard.png");
 	_texture.loadFromImage(_image);
 	_sprite.setTexture(_texture);
-	std::cout << "hi\n";
+	std::cout << "hi\n";*/
+	for (int i = 0; i < 8*8; i++)
+	{
+		_fieldElement.push_back(new sf::RectangleShape(sf::Vector2f(800 / 8, 800 / 8)));
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			for (auto it = _fieldElement.begin(); it != _fieldElement.end(); it++)
+			{
+				std::cout << "i = " << i << "\ti % 2 = " << i % 2 << "\t";
+				std::cout << "j = " << j << "\tj % 2 = " << j % 2 << std::endl;
+
+				if (i % 2 == 0)	(*it)->setFillColor(sf::Color::White);
+				else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Black);
+				(*it)->setPosition(sf::Vector2f(i * 800 / 8, j * 800 / 8));
+			}
+		}
+	}
 }
 
 Field::~Field()
@@ -22,29 +41,10 @@ void Field::update(sf::Time deltaTime)
 
 }
 
-void Field::setScale(const sf::Vector2f &vec)
-{
-	_sprite.setScale(vec);
-}
-
-sf::Vector2u Field::getSizeOfTexture()
-{
-	return _texture.getSize();
-}
-
-void Field::setSpriteFromTexture(const sf::Texture &texture)
-{
-	_sprite.setTexture(texture);
-}
-
-void Field::setStartPosition(const sf::Vector2f &vec)
-{
-	_sprite.setPosition(vec);
-}
-
 void Field::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	target.draw(_sprite, states);
+	for (auto it = _fieldElement.begin(); it != _fieldElement.end(); it++)
+	{
+		target.draw(*(*it), states);
+	}
 }
-
-
