@@ -3,9 +3,9 @@
 
 Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 {
-	_field.setScale(sf::Vector2f(1.0f / (float(_field.getSizeOfTexture().x) / float(_window.getSize().x)), 
-								1.0f / (float(_field.getSizeOfTexture().y) / float(_window.getSize().y))));
-	_field.setStartPosition(sf::Vector2f(0, 0));
+	//_field.setScale(sf::Vector2f(1.0f / (float(_field.getSizeOfTexture().x) / float(_window.getSize().x)), 
+	//							1.0f / (float(_field.getSizeOfTexture().y) / float(_window.getSize().y))));
+	//_field.setStartPosition(sf::Vector2f(0, 0));
 
 	std::vector<std::string> figuresName = { "pawn", "castle", "knight", "bishop", "queen", "king" };
 	std::vector<std::string> figuresColor = { "white", "black" };
@@ -27,6 +27,35 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 			}
 		}
 	}
+	int board[8][8] = {
+							-1,-2,-3,-4,-5,-3,-2,-1,
+							-6,-6,-6,-6,-6,-6,-6,-6,
+							0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0,
+							6, 6, 6, 6, 6, 6, 6, 6,
+							1, 2, 3, 4, 5, 3, 2, 1 
+													};
+	int k = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			int n = board[i][j];
+			if (n == 0) continue;
+			int x = abs(n) - 1;
+			int y = n > 0 ? 1 : 0;
+			std::cout << x << "\t" << y << std::endl;
+			/*for (auto it = _figures.begin(); it != _figures.end(); it++)
+			{
+				(*it)->setPosition(sf::Vector2f(800/8*i, 800/8*j));
+			}*/
+			(_figures)[k]->setPosition(sf::Vector2f(800 / 8 * i, 800 / 8 * j));
+			k++;
+		}
+	}
+	
 }
 
 Game::~Game()
@@ -76,5 +105,9 @@ void Game::render()
 	_window.clear();
 	//_window.draw(_field);
 	_field.draw(_window);
+	for (auto it = _figures.begin(); it != _figures.end(); it++)
+	{
+		(*it)->draw(_window);
+	}
 	_window.display();
 }

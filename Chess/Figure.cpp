@@ -11,6 +11,7 @@ Figure::Figure(const std::string &name, const std::string &color)
 	_texture.loadFromImage(_image);
 	_sprite.setTexture(_texture);
 	_sprite.setTextureRect(sf::IntRect(_color == "white" ? 0 : _image.getSize().x / 2, 0, _image.getSize().x / 2, _image.getSize().y));
+	_sprite.setScale(0.2,0.2);
 	//_sprite.setTextureRect(sf::IntRect(vec1, vec2));
 }
 

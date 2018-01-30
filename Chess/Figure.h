@@ -11,6 +11,8 @@ public:
 	std::string _name;
 	std::string _color;
 	
+	friend class Field;
+
 protected:
 
 };

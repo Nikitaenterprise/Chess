@@ -23,12 +23,7 @@ void Element::setSpriteFromTexture(const sf::Texture & texture)
 	_sprite.setTexture(texture);
 }
 
-void Element::setStartPosition(const sf::Vector2f & vec)
+void Element::setPosition(const sf::Vector2f & vec)
 {
 	_sprite.setPosition(vec);
 }
-//
-//void Element::draw(sf::RenderTarget & target, sf::RenderStates states) const
-//{
-//	target.draw(_sprite, states);
-//}

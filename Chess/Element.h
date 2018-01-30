@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-class Element : protected sf::Drawable
+class Element : public sf::Drawable
 {
 public:
 	Element(const Element &) = delete;
@@ -15,8 +15,7 @@ public:
 	void setScale(const sf::Vector2f &vec);
 	sf::Vector2u getSizeOfTexture();
 	void setSpriteFromTexture(const sf::Texture &texture);
-	void setStartPosition(const sf::Vector2f &vec);
-	//virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
+	void setPosition(const sf::Vector2f &vec);
 
 protected:
 	sf::Image _image;
