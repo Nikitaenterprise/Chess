@@ -16,6 +16,11 @@ public:
 	sf::Vector2u getSizeOfTexture();
 	void setSpriteFromTexture(const sf::Texture &texture);
 	void setPosition(const sf::Vector2f &vec);
+	virtual void processEvents(sf::Event &event) = 0;
+	virtual void update() = 0;
+
+	sf::Vector2f pos;
+	sf::Vector2f dPos;
 
 protected:
 	sf::Image _image;

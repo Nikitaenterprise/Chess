@@ -9,7 +9,8 @@ public:
 	Field();
 	~Field();
 
-	void processEvents();
+	virtual void processEvents(sf::Event &event) override;
+	virtual void update() override;
 	void update(sf::Time deltaTime);
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
 	bool isClicked;

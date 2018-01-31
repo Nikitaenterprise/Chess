@@ -41,9 +41,13 @@ Field::~Field()
 {
 }
 
-void Field::processEvents()
+void Field::processEvents(sf::Event &event)
 {
 	isClicked = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+}
+
+void Field::update()
+{
 }
 
 void Field::update(sf::Time deltaTime)

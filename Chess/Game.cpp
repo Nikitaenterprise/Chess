@@ -28,7 +28,6 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 					{
 						pos.x = j;
 						pos.y = i;
-						//std::cout << "\ti = " << i << "\tj = " << j << "\tboard2[i][j] = " << board2[i][j] << "\tpos.x = " << pos.x << "\tpos.y = " << pos.y << std::endl;
 						board2[i][j] = "zero";
 						goto breakLoop;
 					}
@@ -41,7 +40,6 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 		{
 			_figures.push_back(new Figure(name, color));
 			(*this)(pos, name);
-			std::cout << pos.x << "\t" << pos.y << "\t" << color << "\t" << name << std::endl;
 			if (k == 9 || k == 10) this->show();
 			_figures[k]->setPosition(sf::Vector2f(800 / 8 * pos.x, 800 / 8 * pos.y));
 			k++;
@@ -69,8 +67,8 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 		{
 			if (*it2 == "pawn")
 				for (int l = 0; l < 8; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-			else if (*it2 == "king") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-			else if (*it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
+			else if (*it2 == "king" || *it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
+			//else if (*it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 			else if (*it2 == "castle" || *it2 == "knight" || *it2 == "bishop")
 				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 		}
@@ -111,7 +109,8 @@ void Game::processEvents()
 		{
 			_window.close();
 		}
-		_field.processEvents();
+		_field.processEvents(event);
+		for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->processEvents(event);
 	}
 }
 
