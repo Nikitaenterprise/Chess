@@ -15,7 +15,6 @@ Field::Field()
 	int inverse = -1;
 	for (auto it = _fieldElement.begin(); it != _fieldElement.end(); it++)
 	{
-		//std::cout << "i = " << i << "\ti % 2 = " << i % 2 << "\tj = " << j << "\n";
 		if (inverse == 1)
 		{
 			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::Black);
@@ -27,9 +26,7 @@ Field::Field()
 			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Black);
 		}
 		(*it)->setPosition(sf::Vector2f(i * 800 / 8, j * 800 / 8));
-		//std::cout << sf::Vector2f(i * 800 / 8, j * 800 / 8).x << "\t" <<sf::Vector2f(i * 800 / 8, j * 800 / 8).y;
-		//std::cout << "\ti = " << i << "\ti % 2 = " << i % 2 << "\tj = " << j;
-		//std::cout << "\tinverse = " << inverse << std::endl;
+
 		i++;
 		if (i % 8 == 0)
 		{
