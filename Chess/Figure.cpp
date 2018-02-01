@@ -39,7 +39,8 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			sf::Vector2f temp(_image.getSize().x / 4, _image.getSize().y / 2);
 			std::cout << "before pos: " << pos.x << "\t" << pos.y << std::endl;
 			//this->pos = static_cast<sf::Vector2f> (sf::Mouse::getPosition(window));	
-			this->dPos = static_cast<sf::Vector2f> (sf::Mouse::getPosition(window)) - this->pos - sf::Vector2f(52,52);
+			this->dPos = static_cast<sf::Vector2f> (sf::Mouse::getPosition(window)) -
+							this->pos - sf::Vector2f(this->_sprite.getGlobalBounds().width/2, this->_sprite.getGlobalBounds().height / 2);
 			std::cout << "window: " << sf::Mouse::getPosition(window).x << "\t" << sf::Mouse::getPosition(window).y << std::endl;
 			changeColor(this, sf::Color::Green);
 			std::cout << "after pos: " << pos.x << "\t" << pos.y << std::endl;
