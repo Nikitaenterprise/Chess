@@ -8,15 +8,17 @@ public:
 	~Figure();
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
-	virtual void processEvents(sf::Event &event) override;
+	virtual void processEvents(sf::Event &event, const sf::Window &window) override;
 	virtual void update() override;
 	void updateCoordinates(sf::Vector2i &pos);
+	void changeColor(Figure *that, const sf::Color &color);
+	void setOrigin();
 
 	bool isMove = false;
 	std::string _name;
 	std::string _color;
 	
-	friend class Field;
+	//friend class Field;
 
 protected:
 

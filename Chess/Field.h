@@ -9,7 +9,7 @@ public:
 	Field();
 	~Field();
 
-	virtual void processEvents(sf::Event &event) override;
+	virtual void processEvents(sf::Event &event, const sf::Window &window) override;
 	virtual void update() override;
 	void update(sf::Time deltaTime);
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;

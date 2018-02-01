@@ -41,7 +41,7 @@ Field::~Field()
 {
 }
 
-void Field::processEvents(sf::Event &event)
+void Field::processEvents(sf::Event &event, const sf::Window &window)
 {
 	isClicked = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }

@@ -25,6 +25,7 @@ void Element::setSpriteFromTexture(const sf::Texture & texture)
 
 void Element::setPosition(const sf::Vector2f & vec)
 {
+	sf::Vector2f temp(_image.getSize().x / 4, _image.getSize().y / 2);
 	_sprite.setPosition(vec);
-	this->pos = vec;
+	this->pos = vec+temp;
 }
