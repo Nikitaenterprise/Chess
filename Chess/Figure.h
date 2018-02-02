@@ -1,5 +1,5 @@
 #pragma once
-#include "Element.h"
+#include "Game.h"
 
 class Figure : public Element
 {

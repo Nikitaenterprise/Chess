@@ -110,14 +110,14 @@ void Game::processEvents()
 			(event.type == sf::Event::KeyPressed && 
 				event.key.code == sf::Keyboard::Escape))	_window.close();
 
-		_field.processEvents(event, _window);
+		for (auto it = _field.begin(); it != _field.end(); it++) (*it)->processEvents(event, _window);
 		for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->processEvents(event, _window);
 	}
 }
 
 void Game::update(sf::Time deltaTime)
 {
-	_field.update(deltaTime);
+	for (auto it = _field.begin(); it != _field.end(); it++) (*it)->update(deltaTime);
 	for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->update();
 }
 
@@ -125,7 +125,44 @@ void Game::render()
 {
 	_window.clear();
 	//_window.draw(_field);
-	_field.draw(_window);
+	for (auto it = _field.begin(); it != _field.end(); it++) (*it)->draw(_window);
 	for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->draw(_window);
 	_window.display();
+}
+
+Element::Element()
+{
+}
+
+Element::~Element()
+{
+}
+
+void Element::setScale(const sf::Vector2f & vec)
+{
+	_sprite.setScale(vec);
+}
+
+sf::Vector2u Element::getSizeOfTexture()
+{
+	return _texture.getSize();
+}
+
+void Element::setSpriteFromTexture(const sf::Texture & texture)
+{
+	_sprite.setTexture(texture);
+}
+
+void Element::setPosition(const sf::Vector2f & vec)
+{
+	sf::Vector2f offset(52, 52);
+	sf::Vector2f temp(_image.getSize().x / 4 - offset.x, _image.getSize().y / 2 - offset.y);
+	_sprite.setPosition(vec);
+	this->pos = vec + temp;
+	_oldPos = this->_sprite.getPosition();
+}
+
+void Element::setGamePtr(Game * game)
+{
+	_thisGame = game;
 }
