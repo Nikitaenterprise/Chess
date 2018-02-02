@@ -1,6 +1,5 @@
 #pragma once
 #include "Element.h"
-#include "Game.h"
 
 class Figure : public Element
 {
@@ -19,8 +18,6 @@ public:
 	bool isFirsTimeMoving = true;
 	std::string _name;
 	std::string _color;
-
-	//friend class Field;
 
 protected:
 

@@ -31,3 +31,8 @@ void Element::setPosition(const sf::Vector2f & vec)
 	this->pos = vec+temp;
 	_oldPos = this->_sprite.getPosition();
 }
+
+void Element::setGamePtr(Game * game)
+{
+	_thisGame = game;
+}

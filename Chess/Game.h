@@ -21,7 +21,6 @@ public:
 	char *getBoardElement(int i, int j) { return _board[i][j]; };
 	void setBoardElement(int i, int j, char *str) { _board[i][j] = str; };
 	
-	Game *_thisGame = this;
 	char *_board[8][8] =
 	{
 		{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },

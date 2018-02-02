@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 {
 	class

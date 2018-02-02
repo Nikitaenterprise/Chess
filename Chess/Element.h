@@ -6,8 +6,8 @@
 
 class Element : public sf::Drawable
 {
-	friend class Game;
 public:
+	friend class Game;
 	Element(const Element &) = delete;
 	Element & operator=(const Element &) = delete;
 	Element();
@@ -17,7 +17,7 @@ public:
 	sf::Vector2u getSizeOfTexture();
 	void setSpriteFromTexture(const sf::Texture &texture);
 	void setPosition(const sf::Vector2f &vec);
-	void setGamePtr(Game *game) { _thisGame = game; };
+	void setGamePtr(Game *game);
 	virtual void processEvents(sf::Event &event, const sf::Window &window) = 0;
 	virtual void update() = 0;
 
@@ -26,7 +26,7 @@ public:
 	sf::Vector2f _oldPos;
 	sf::Vector2f _newPos;
 
-	Game *_thisGame = nullptr;
+	Game *_thisGame;
 
 protected:
 	sf::Image _image;
