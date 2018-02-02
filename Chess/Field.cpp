@@ -17,13 +17,13 @@ Field::Field()
 	{
 		if (inverse == 1)
 		{
-			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::Black);
+			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::Yellow);
 			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::White);
 		}
 		else if (inverse == -1)
 		{
 			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::White);
-			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Black);
+			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Yellow);
 		}
 		(*it)->setPosition(sf::Vector2f(i * 800 / 8, j * 800 / 8));
 

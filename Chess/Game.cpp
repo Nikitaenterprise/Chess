@@ -6,30 +6,29 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 	class
 	{
 	public:
-		char *board2[8][8] =
+		char *startPosition[8][8] =
 		{
-		{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },
-		{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-		{ "castle", "knight", "bishop", "king", "queen", "bishop", "knight", "castle" },
+			{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },
+			{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
+			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+			{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
+			{ "castle", "knight", "bishop", "king", "queen", "bishop", "knight", "castle" },
 		};
-
 		void operator()(sf::Vector2i &pos, std::string &name)
 		{
 			for (int i = 0; i < 8; i++)
 			{
 				for (int j = 0; j < 8; j++)
 				{
-					if (board2[i][j] == "empty") continue;
-					if (board2[i][j] == name)
+					if (startPosition[i][j] == "empty") continue;
+					if (startPosition[i][j] == name)
 					{
 						pos.x = j;
 						pos.y = i;
-						board2[i][j] = "zero";
+						startPosition[i][j] = "empty";
 						goto breakLoop;
 					}
 				}
@@ -52,7 +51,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 			std::cout << std::endl;
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
-					std::cout << board2[i][j] << "\t";
+					std::cout << startPosition[i][j] << "\t";
 				}
 				std::cout<<std::endl;
 			}
@@ -71,12 +70,10 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 			if (*it2 == "pawn")
 				for (int l = 0; l < 8; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 			else if (*it2 == "king" || *it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-			//else if (*it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 			else if (*it2 == "castle" || *it2 == "knight" || *it2 == "bishop")
 				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 		}
 	}
-	//for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setOrigin();
 	getStartCoord.show();	
 }
 
