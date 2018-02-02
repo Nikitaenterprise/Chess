@@ -17,10 +17,11 @@ public:
 	Game();
 	~Game();
 	
-	const Game *_thisGame = this;
 	void run(int minimumFramePerSeconds = 60);
 	char *getBoardElement(int i, int j) { return _board[i][j]; };
 	void setBoardElement(int i, int j, char *str) { _board[i][j] = str; };
+	
+	Game *_thisGame = this;
 	char *_board[8][8] =
 	{
 		{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },
@@ -32,8 +33,7 @@ public:
 		{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
 		{ "castle", "knight", "bishop", "king", "queen", "bishop", "knight", "castle" },
 	};
-	friend class Figure;
-
+	
 private:
 	void processEvents();
 	void update(sf::Time deltaTime);

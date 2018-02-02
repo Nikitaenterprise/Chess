@@ -25,7 +25,7 @@ Field::Field()
 			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::White);
 			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Yellow);
 		}
-		(*it)->setPosition(sf::Vector2f(i * 800 / 8, j * 800 / 8));
+		(*it)->setPosition(sf::Vector2f(i * 800.0f / 8, j * 800.0f / 8));
 
 		i++;
 		if (i % 8 == 0)

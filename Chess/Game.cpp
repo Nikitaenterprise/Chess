@@ -75,6 +75,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 		}
 	}
 	getStartCoord.show();	
+	for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setGamePtr(this);
 }
 
 Game::~Game()
