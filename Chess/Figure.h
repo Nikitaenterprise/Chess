@@ -1,4 +1,8 @@
 #pragma once
+<<<<<<< HEAD
+=======
+#include "Element.h"
+>>>>>>> parent of b6dab43... Commit #5
 #include "Game.h"
 
 class Figure : public Element
@@ -18,6 +22,8 @@ public:
 	bool isFirsTimeMoving = true;
 	std::string _name;
 	std::string _color;
+
+	//friend class Field;
 
 protected:
 
