@@ -1,9 +1,5 @@
 #pragma once
-<<<<<<< HEAD
-=======
 #include "Element.h"
->>>>>>> parent of b6dab43... Commit #5
-#include "Game.h"
 
 class Figure : public Element
 {

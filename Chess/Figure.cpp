@@ -1,7 +1,6 @@
 #include "Figure.h"
+#include "Game.h"
 
-
-//const sf::Vector2i &vec1, const sf::Vector2i &vec2
 Figure::Figure(const std::string &name, const std::string &color)
 {
 	_name = name;
@@ -29,6 +28,16 @@ void Figure::draw(sf::RenderTarget & target, sf::RenderStates states) const
 
 void Figure::processEvents(sf::Event &event, const sf::Window &window)
 {
+	if (event.type ==
+		sf::Event::MouseButtonPressed &&
+		event.mouseButton.button == sf::Mouse::Left &&
+		this->_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f> (sf::Mouse::getPosition(window))) &&
+		this->isMove == false)
+	{
+		this->_oldPos = this->_sprite.getPosition();
+		std::cout << "_oldPos0 = " << this->_oldPos.x << " ( " << int(this->_oldPos.x / 100) << " ) "
+			<< "\t" << this->_oldPos.y << " ( " << int(this->_oldPos.y / 100) << " ) " << std::endl;
+	}
 	if (event.type == 
 		sf::Event::MouseButtonPressed &&
 		event.mouseButton.button == sf::Mouse::Left ||
@@ -49,7 +58,6 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 				<< this->_sprite.getGlobalBounds().width / 2 << ", " << this->_sprite.getGlobalBounds().height / 2 << ")"
 				<<std::endl;
 			std::cout << "(dPos.x, dPos.y)\t=\t(mouse.x, mouse.y)\t-\t(pos.x, pos.y)\t-\t(bounds.width / 2, bounds.height / 2)\n";*/
-			_oldPos = this->_sprite.getPosition();
 		}
 	}
 	else if (event.type ==
@@ -58,15 +66,19 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 	{
 		if (this->_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f> (sf::Mouse::getPosition(window))))
 		{
-			std::cout << this->pos.x << "\t" << this->pos.y << "\t" << this->_name << std::endl;
-			this->_newPos = this->pos;
-			changeColor(this, sf::Color::White);
 			this->isMove = false;
-			int i = int(this->_newPos.x) / 100, j = int(this->_newPos.y) / 100;
-			int iM = int(sf::Mouse::getPosition(window).x) / 100, jM = int(sf::Mouse::getPosition(window).y) / 100;
-			std::cout << i << "\t" << j << std::endl;
-			std::cout << iM << "\t" << jM << std::endl;
-			
+			changeColor(this, sf::Color::White);
+			int i = int(sf::Mouse::getPosition(window).x) / 100, j = int(sf::Mouse::getPosition(window).y) / 100;
+			this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
+			_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+			this->_newPos = this->_sprite.getPosition();
+			_thisGame->setBoardElement(i, j, this->_name);
+			_thisGame->printBoard();
+			/*std::cout << "_oldPos = " << this->_oldPos.x << " ( " << int(this->_oldPos.x / 100) << " ) " 
+				<< "\t" << this->_oldPos.y << " ( " << int(this->_oldPos.y / 100) << " ) " << std::endl;
+			std::cout << "_newPos = " << this->_newPos.x << " ( " << int(this->_newPos.x / 100) << " ) "
+				<< "\t" << this->_newPos.y << " ( " << int(this->_newPos.y / 100) << " ) " << std::endl;
+			std::cout << std::endl;*/
 		}
 	}
 }
