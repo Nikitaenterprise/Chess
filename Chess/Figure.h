@@ -14,6 +14,7 @@ public:
 	void changeColor(Figure *that, const sf::Color &color);
 	void setOrigin();
 	bool canMoveToThisPlace(int i, int j);
+	bool logic(int i, int j);
 
 	bool isMove = false;
 	bool isFirsTimeMoving = true;

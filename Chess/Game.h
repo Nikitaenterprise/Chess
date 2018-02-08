@@ -19,7 +19,9 @@ public:
 	
 	void run(int minimumFramePerSeconds = 60);
 	std::string getBoardElement(int i, int j) { return _board[j][i]; };
+	Figure & getBoardFigure(int i, int j);
 	void setBoardElement(int i, int j, std::string &str) { _board[j][i] = str; };
+	void deleteFigure(Figure  *figure);
 	void printBoard();
 
 	Game *_thisGame = this;

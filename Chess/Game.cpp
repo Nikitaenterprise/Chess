@@ -44,22 +44,10 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 			_figures[k]->setPosition(sf::Vector2f(float(800 / 8 * pos.x), float(800 / 8 * pos.y)));
 			k++;
 		};
-
-		/*void show()
-		{
-			std::cout << std::endl;
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					std::cout << startPosition[i][j] << "\t";
-				}
-				std::cout<<std::endl;
-			}
-		}*/
 	} getStartCoord;
 
 	int k = 0;
 	sf::Vector2i pos;
-	//enum figuresNameEnum { pawn = 6, castle = 1, knight = 2, bishop = 3, queen = 4, king = 5};
 	std::vector<std::string> figuresName = { "pawn", "castle", "knight", "bishop", "queen", "king" };
 	std::vector<std::string> figuresColor = { "w", "b" };
 	for (auto it1 = figuresColor.begin(); it1 != figuresColor.end(); it1++)
@@ -73,7 +61,6 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 		}
 	}
-	//getStartCoord.show();	
 	for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setGamePtr(this);
 }
 
@@ -98,6 +85,29 @@ void Game::run(int minimumFramePerSeconds)
 		}
 		update(timeSinceLastUpdate);
 		render();
+	}
+}
+
+Figure & Game::getBoardFigure(int i, int j)
+{
+	for (auto it = _figures.begin(); it != _figures.end(); it++)
+	{
+		if (static_cast<int>((*it)->_oldPos.x / 100) == i && static_cast<int>((*it)->_oldPos.y / 100) == j)
+			return *(*it);
+	}
+}
+
+void Game::deleteFigure(Figure  *figure)
+{
+	for (auto it = _figures.begin(); it != _figures.end(); it++)
+	{
+		Figure *itTemp = *it;
+		if (itTemp == figure)
+		{
+			it = _figures.erase(it);
+			delete itTemp;
+			std::cout << "deleted" << std::endl;
+		}
 	}
 }
 
