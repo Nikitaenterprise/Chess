@@ -8,14 +8,14 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 	public:
 		char *startPosition[8][8] =
 		{
-			{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },
-			{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-			{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-			{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-			{ "castle", "knight", "bishop", "king", "queen", "bishop", "knight", "castle" },
+		{ "wcastle", "wknight", "wbishop", "wqueen", "wking", "wbishop", "wknight", "wcastle" },
+		{ "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" },
+		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+		{ "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" },
+		{ "bcastle", "bknight", "bbishop", "bking", "bqueen", "bbishop", "bknight", "bcastle" },
 		};
 		void operator()(sf::Vector2i &pos, std::string &name)
 		{
@@ -40,7 +40,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 		void setFigure(std::vector<Figure*> &_figures, std::string &name, std::string &color, sf::Vector2i &pos, int &k)
 		{
 			_figures.push_back(new Figure(name, color));
-			(*this)(pos, name);
+			(*this)(pos, color+name);
 			_figures[k]->setPosition(sf::Vector2f(float(800 / 8 * pos.x), float(800 / 8 * pos.y)));
 			k++;
 		};
@@ -61,7 +61,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 	sf::Vector2i pos;
 	//enum figuresNameEnum { pawn = 6, castle = 1, knight = 2, bishop = 3, queen = 4, king = 5};
 	std::vector<std::string> figuresName = { "pawn", "castle", "knight", "bishop", "queen", "king" };
-	std::vector<std::string> figuresColor = { "white", "black" };
+	std::vector<std::string> figuresColor = { "w", "b" };
 	for (auto it1 = figuresColor.begin(); it1 != figuresColor.end(); it1++)
 	{
 		for (auto it2 = figuresName.begin(); it2 != figuresName.end(); it2++)

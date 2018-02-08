@@ -25,14 +25,14 @@ public:
 	Game *_thisGame = this;
 	std::string _board[8][8] =
 	{
-		{ "castle", "knight", "bishop", "queen", "king", "bishop", "knight", "castle" },
-		{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
-		{ "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" , "pawn" },
-		{ "castle", "knight", "bishop", "king", "queen", "bishop", "knight", "castle" },
+	{ "wcastle", "wknight", "wbishop", "wqueen", "wking", "wbishop", "wknight", "wcastle" },
+	{ "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" , "wpawn" },
+	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
+	{ "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" },
+	{ "bcastle", "bknight", "bbishop", "bking", "bqueen", "bbishop", "bknight", "bcastle" },
 	};
 	
 private:

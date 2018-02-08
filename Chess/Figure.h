@@ -13,6 +13,7 @@ public:
 	void updateCoordinates(sf::Vector2i &pos);
 	void changeColor(Figure *that, const sf::Color &color);
 	void setOrigin();
+	bool canMoveToThisPlace(int i, int j);
 
 	bool isMove = false;
 	bool isFirsTimeMoving = true;

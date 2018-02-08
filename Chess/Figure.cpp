@@ -11,7 +11,7 @@ Figure::Figure(const std::string &name, const std::string &color)
 	_texture.loadFromImage(_image);
 	_sprite.setTexture(_texture);
 
-	_sprite.setTextureRect(sf::IntRect(_color == "white" ? 0 : _image.getSize().x / 2, 0, _image.getSize().x / 2, _image.getSize().y));
+	_sprite.setTextureRect(sf::IntRect(_color == "w" ? 0 : _image.getSize().x / 2, 0, _image.getSize().x / 2, _image.getSize().y));
 	_sprite.setScale(float(0.2), float(0.2));
 	//std::cout << _sprite.getLocalBounds().width << "\t" << _sprite.getLocalBounds().height << std::endl;
 	//_sprite.setOrigin(sf::Vector2f( pos.x + _image.getSize().x / 4, pos.y + _image.getSize().y / 2));
@@ -69,11 +69,20 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			this->isMove = false;
 			changeColor(this, sf::Color::White);
 			int i = int(sf::Mouse::getPosition(window).x) / 100, j = int(sf::Mouse::getPosition(window).y) / 100;
-			this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
-			_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
-			this->_newPos = this->_sprite.getPosition();
-			_thisGame->setBoardElement(i, j, this->_name);
-			_thisGame->printBoard();
+			if (this->canMoveToThisPlace(i, j))
+			{
+				this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
+				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+				this->_newPos = this->_sprite.getPosition();
+				_thisGame->setBoardElement(i, j, this->_color + this->_name);
+				_thisGame->printBoard();
+			}
+			else
+			{
+				this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);
+				
+				_thisGame->printBoard();
+			}
 			/*std::cout << "_oldPos = " << this->_oldPos.x << " ( " << int(this->_oldPos.x / 100) << " ) " 
 				<< "\t" << this->_oldPos.y << " ( " << int(this->_oldPos.y / 100) << " ) " << std::endl;
 			std::cout << "_newPos = " << this->_newPos.x << " ( " << int(this->_newPos.x / 100) << " ) "
@@ -121,4 +130,10 @@ void Figure::changeColor(Figure *that, const sf::Color &color)
 void Figure::setOrigin()
 {
 	_sprite.setOrigin(sf::Vector2f());
+}
+
+bool Figure::canMoveToThisPlace(int i, int j)
+{
+	if (_thisGame->getBoardElement(i, j) == "empty") return true;
+	else return false;
 }
