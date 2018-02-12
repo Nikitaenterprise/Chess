@@ -93,17 +93,13 @@ Figure & Game::getBoardFigure(int i, int j)
 	for (const auto &obj : _figures)
 	{
 		if (static_cast<int>(obj->_oldPos.x / 100) == i && static_cast<int>(obj->_oldPos.y / 100) == j)
-		{
-			std::cout << "we find figure\n";
 			return *obj;
-		}
 	}
 }
 
 void Game::deleteFigure(Figure  *figure)
 {
 	_figures.erase(std::remove(_figures.begin(), _figures.end(), figure), _figures.end());
-	std::cout << "deleted " << figure->figurePtr << std::endl;
 	figure->~Figure();
 	/*for (auto it = _figures.begin(); it != _figures.end(); ++it)
 	{
@@ -126,6 +122,7 @@ void Game::printBoard()
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void Game::processEvents()
@@ -146,13 +143,13 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
 	_field.update(deltaTime);
-	for (auto obj : _figures)	obj->update();
+	for (const auto obj : _figures)	obj->update();
 }
 
 void Game::render()
 {
 	_window.clear();
 	_window.draw(_field);
-	for (auto obj : _figures)	obj->draw(_window);
+	for (const auto obj : _figures)	obj->draw(_window);
 	_window.display();
 }

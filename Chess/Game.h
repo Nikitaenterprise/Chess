@@ -43,7 +43,6 @@ private:
 	void render();
 
 	sf::RenderWindow _window;
-	//std::vector<Field> _field;
 	Field _field;
 	std::vector<Figure*> _figures;
 };

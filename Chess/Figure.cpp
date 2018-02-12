@@ -82,6 +82,7 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 				this->_newPos = this->_sprite.getPosition();
 				_thisGame->setBoardElement(i, j, this->_color + this->_name);
 			}
+			std::cout << logic(i, j) << std::endl;
 			this->_oldPos = this->_sprite.getPosition();
 			_thisGame->printBoard();
 		}
@@ -121,17 +122,53 @@ bool Figure::canMoveToThisPlace(int i, int j)
 
 bool Figure::logic(int i, int j)
 {
+	bool canMove = false;
 	int colorVariable = 1;
-	int iOld = static_cast<int> (this->_oldPos.x);
-	int jOld = static_cast<int> (this->_oldPos.y);
-	if (this->_color == "b") colorVariable *= -1;
+	int iOld = static_cast<int> (this->_oldPos.x / 100);
+	int jOld = static_cast<int> (this->_oldPos.y / 100);
+
+	if (this->_color == "w") colorVariable *= -1;
 
 	if (this->_name == "pawn")
 	{
-		if (i - iOld > 1)
-		{
-
-		}
+		if (i - iOld == 0 && j - jOld == -1 * colorVariable) canMove = true;
+		else if ((i - iOld == -1 * colorVariable || i - iOld == 1 * colorVariable)
+				&& j - jOld == -1 * colorVariable) canMove = true;
 	}
-	return false;
+	if (this->_name == "king")
+	{
+		if (i - iOld == 0 && j - jOld == -1 * colorVariable) canMove = true;
+		else if (i - iOld == 1 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
+		else if (i - iOld == 1 * colorVariable && j - jOld == 0) canMove = true;
+		else if (i - iOld == 1 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
+		else if (i - iOld == 0 && j - jOld == 1 * colorVariable) canMove = true;
+		else if (i - iOld == -1 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
+		else if (i - iOld == -1 * colorVariable && j - jOld == 0) canMove = true;
+		else if (i - iOld == -1 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
+	}
+	if (this->_name == "knight")
+	{
+		if (i - iOld == 1 * colorVariable && j - jOld == -2 * colorVariable) canMove = true;
+		else if (i - iOld == 2 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
+		else if (i - iOld == 2 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
+		else if (i - iOld == 1 * colorVariable && j - jOld == 2 * colorVariable) canMove = true;
+		else if (i - iOld == -1 * colorVariable && j - jOld == 2 * colorVariable) canMove = true;
+		else if (i - iOld == -2 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
+		else if (i - iOld == -2 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
+		else if (i - iOld == -1 * colorVariable && j - jOld == -2 * colorVariable) canMove = true;
+	}
+	if (this->_name == "castle")
+	{
+		if (7 - i >= 0 && j - jOld == 0) canMove = true;
+		else if (i - iOld == 0 && 7 - j >= 0) canMove = true;
+	}
+	if (this->_name == "bishop")
+	{
+		if (7 - i >= 0 && 7 - j >= 0) canMove == true;
+	}
+	std::cout << "iOld = " << iOld << "\tjOld = " << jOld
+		<< "\ti = " << i << "\tj = " << j << std::endl;
+	std::cout << "j - jOld = " << j - jOld << "\ti - iOld = " << i - iOld << std::endl;
+	std::cout << "7 - i = " << 7 - i << "\t7 - j = " << 7 - j << std::endl;
+	return canMove;
 }
