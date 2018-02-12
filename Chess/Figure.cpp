@@ -131,44 +131,50 @@ bool Figure::logic(int i, int j)
 
 	if (this->_name == "pawn")
 	{
-		if (i - iOld == 0 && j - jOld == -1 * colorVariable) canMove = true;
-		else if ((i - iOld == -1 * colorVariable || i - iOld == 1 * colorVariable)
-				&& j - jOld == -1 * colorVariable) canMove = true;
+		if ((i - iOld == 0 && j - jOld == -1 * colorVariable)
+			||	((i - iOld == -1 * colorVariable || i - iOld == 1 * colorVariable)
+				&& j - jOld == -1 * colorVariable)) canMove = true;
 	}
 	if (this->_name == "king")
 	{
-		if (i - iOld == 0 && j - jOld == -1 * colorVariable) canMove = true;
-		else if (i - iOld == 1 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
-		else if (i - iOld == 1 * colorVariable && j - jOld == 0) canMove = true;
-		else if (i - iOld == 1 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
-		else if (i - iOld == 0 && j - jOld == 1 * colorVariable) canMove = true;
-		else if (i - iOld == -1 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
-		else if (i - iOld == -1 * colorVariable && j - jOld == 0) canMove = true;
-		else if (i - iOld == -1 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
+		if ((i - iOld == 0 && j - jOld == -1 * colorVariable) 
+			||	(i - iOld == 1 * colorVariable && j - jOld == -1 * colorVariable) 
+			||	(i - iOld == 1 * colorVariable && j - jOld == 0) 
+			||	(i - iOld == 1 * colorVariable && j - jOld == 1 * colorVariable) 
+			||	(i - iOld == 0 && j - jOld == 1 * colorVariable) 
+			||	(i - iOld == -1 * colorVariable && j - jOld == 1 * colorVariable) 
+			||	(i - iOld == -1 * colorVariable && j - jOld == 0) 
+			||	(i - iOld == -1 * colorVariable && j - jOld == -1 * colorVariable)) canMove = true;
 	}
 	if (this->_name == "knight")
 	{
-		if (i - iOld == 1 * colorVariable && j - jOld == -2 * colorVariable) canMove = true;
-		else if (i - iOld == 2 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
-		else if (i - iOld == 2 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
-		else if (i - iOld == 1 * colorVariable && j - jOld == 2 * colorVariable) canMove = true;
-		else if (i - iOld == -1 * colorVariable && j - jOld == 2 * colorVariable) canMove = true;
-		else if (i - iOld == -2 * colorVariable && j - jOld == 1 * colorVariable) canMove = true;
-		else if (i - iOld == -2 * colorVariable && j - jOld == -1 * colorVariable) canMove = true;
-		else if (i - iOld == -1 * colorVariable && j - jOld == -2 * colorVariable) canMove = true;
+		if ((i - iOld == 1 * colorVariable && j - jOld == -2 * colorVariable)
+			||	(i - iOld == 2 * colorVariable && j - jOld == -1 * colorVariable)
+			||	(i - iOld == 2 * colorVariable && j - jOld == 1 * colorVariable)
+			||	(i - iOld == 1 * colorVariable && j - jOld == 2 * colorVariable)
+			||	(i - iOld == -1 * colorVariable && j - jOld == 2 * colorVariable)
+			||	(i - iOld == -2 * colorVariable && j - jOld == 1 * colorVariable)
+			||	(i - iOld == -2 * colorVariable && j - jOld == -1 * colorVariable)
+			||	(i - iOld == -1 * colorVariable && j - jOld == -2 * colorVariable)) canMove = true;
 	}
 	if (this->_name == "castle")
 	{
-		if (7 - i >= 0 && j - jOld == 0) canMove = true;
-		else if (i - iOld == 0 && 7 - j >= 0) canMove = true;
+		if ((7 - i >= 0 && j - jOld == 0)
+			||	(i - iOld == 0 && 7 - j >= 0)) canMove = true;
 	}
 	if (this->_name == "bishop")
 	{
-		if (7 - i >= 0 && 7 - j >= 0) canMove == true;
+		if ((i - iOld == j - jOld)
+			||	(i - iOld == (j - jOld) * -1)
+			||	((i - iOld) * -1 == j - jOld)) canMove = true;
 	}
-	std::cout << "iOld = " << iOld << "\tjOld = " << jOld
-		<< "\ti = " << i << "\tj = " << j << std::endl;
-	std::cout << "j - jOld = " << j - jOld << "\ti - iOld = " << i - iOld << std::endl;
-	std::cout << "7 - i = " << 7 - i << "\t7 - j = " << 7 - j << std::endl;
+	if (this->_name == "queen")
+	{
+		if ((7 - i >= 0 && j - jOld == 0)
+			|| (i - iOld == 0 && 7 - j >= 0)
+			||	(i - iOld == j - jOld)
+			|| (i - iOld == (j - jOld) * -1)
+			|| ((i - iOld) * -1 == j - jOld)) canMove = true;
+	}
 	return canMove;
 }
