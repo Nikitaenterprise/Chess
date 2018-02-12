@@ -5,7 +5,7 @@ class Figure : public Element
 {
 public:
 	Figure(const std::string & name, const std::string & color);
-	~Figure();
+	//~Figure();
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
 	virtual void processEvents(sf::Event &event, const sf::Window &window) override;

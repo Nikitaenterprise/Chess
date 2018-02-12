@@ -61,19 +61,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, name, color, pos, k);
 		}
 	}
-	/*for (auto it1 = figuresColor.begin(); it1 != figuresColor.end(); it1++)
-	{
-		for (auto it2 = figuresName.begin(); it2 != figuresName.end(); it2++)
-		{
-			if (*it2 == "pawn")
-				for (int l = 0; l < 8; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-			else if (*it2 == "king" || *it2 == "queen") getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-			else if (*it2 == "castle" || *it2 == "knight" || *it2 == "bishop")
-				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
-		}
-	}*/
 	for (auto &obj : _figures) obj->setGamePtr(this);
-	//for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setGamePtr(this);
 }
 
 Game::~Game()
@@ -102,16 +90,14 @@ void Game::run(int minimumFramePerSeconds)
 
 Figure & Game::getBoardFigure(int i, int j)
 {
-	for (auto &obj : _figures)
+	for (const auto &obj : _figures)
 	{
 		if (static_cast<int>(obj->_oldPos.x / 100) == i && static_cast<int>(obj->_oldPos.y / 100) == j)
+		{
+			std::cout << "we find figure\n";
 			return *obj;
+		}
 	}
-	/*for (auto it = _figures.begin(); it != _figures.end(); it++)
-	{
-		if (static_cast<int>((*it)->_oldPos.x / 100) == i && static_cast<int>((*it)->_oldPos.y / 100) == j)
-			return *(*it);
-	}*/
 }
 
 void Game::deleteFigure(Figure  *figure)
@@ -123,6 +109,7 @@ void Game::deleteFigure(Figure  *figure)
 			it = _figures.erase(it);
 			std::cout << "deleted " << figure->figurePtr << std::endl;
 			figure->~Figure();
+			break;
 		}
 	}
 }
@@ -148,9 +135,7 @@ void Game::processEvents()
 				event.key.code == sf::Keyboard::Escape))	_window.close();
 
 		_field.processEvents(event, _window);
-		//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->processEvents(event, _window);
 		for (auto &obj : _figures) obj->processEvents(event, _window);
-		//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->processEvents(event, _window);
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) system("cls");
 	}
 }
@@ -158,17 +143,13 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
 	_field.update(deltaTime);
-	//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->update(deltaTime);
-	for (auto &obj : _figures)	obj->update();
-	//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->update();
+	for (auto obj : _figures)	obj->update();
 }
 
 void Game::render()
 {
 	_window.clear();
 	_window.draw(_field);
-	//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->draw(_window);
-	for (auto &obj : _figures)	obj->draw(_window);
-	//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->draw(_window);
+	for (auto obj : _figures)	obj->draw(_window);
 	_window.display();
 }
