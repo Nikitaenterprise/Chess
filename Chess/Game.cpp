@@ -15,7 +15,7 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
 		{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
 		{ "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" },
-		{ "bcastle", "bknight", "bbishop", "bking", "bqueen", "bbishop", "bknight", "bcastle" },
+		{ "bcastle", "bknight", "bbishop", "bqueen", "bking", "bbishop", "bknight", "bcastle" },
 		};
 		void operator()(sf::Vector2i &pos, std::string &name)
 		{
@@ -102,7 +102,10 @@ Figure & Game::getBoardFigure(int i, int j)
 
 void Game::deleteFigure(Figure  *figure)
 {
-	for (auto it = _figures.begin(); it != _figures.end(); it++)
+	_figures.erase(std::remove(_figures.begin(), _figures.end(), figure), _figures.end());
+	std::cout << "deleted " << figure->figurePtr << std::endl;
+	figure->~Figure();
+	/*for (auto it = _figures.begin(); it != _figures.end(); ++it)
 	{
 		if ((*it) == figure)
 		{
@@ -111,7 +114,7 @@ void Game::deleteFigure(Figure  *figure)
 			figure->~Figure();
 			break;
 		}
-	}
+	}*/
 }
 
 void Game::printBoard()
@@ -130,12 +133,12 @@ void Game::processEvents()
 	sf::Event event;
 	while (_window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed || 
-			(event.type == sf::Event::KeyPressed && 
-				event.key.code == sf::Keyboard::Escape))	_window.close();
+		if (event.type == sf::Event::Closed  
+			|| (event.type == sf::Event::KeyPressed  
+				&& event.key.code == sf::Keyboard::Escape))	_window.close();
 
 		_field.processEvents(event, _window);
-		for (auto &obj : _figures) obj->processEvents(event, _window);
+		for (const auto obj : _figures) obj->processEvents(event, _window);
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) system("cls");
 	}
 }

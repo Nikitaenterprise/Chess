@@ -21,10 +21,5 @@ public:
 	bool isFirsTimeMoving = true;
 	std::string _name;
 	std::string _color;
-
-	//friend class Field;
-
-protected:
-
 };
 

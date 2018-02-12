@@ -34,7 +34,7 @@ public:
 	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
 	{ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" },
 	{ "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" , "bpawn" },
-	{ "bcastle", "bknight", "bbishop", "bking", "bqueen", "bbishop", "bknight", "bcastle" },
+	{ "bcastle", "bknight", "bbishop", "bqueen", "bking", "bbishop", "bknight", "bcastle" },
 	};
 	
 private:

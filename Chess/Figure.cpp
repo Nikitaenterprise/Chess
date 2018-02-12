@@ -48,7 +48,6 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			this->isMove = true;
 			this->isFirsTimeMoving = false;
 			this->dPos = sf::Vector2f(0, 0);
-			sf::Vector2f temp(_image.getSize().x / 4, _image.getSize().y / 2);
 			this->dPos = static_cast<sf::Vector2f> (sf::Mouse::getPosition(window)) -
 							this->pos - sf::Vector2f(this->_sprite.getGlobalBounds().width/2, this->_sprite.getGlobalBounds().height / 2);
 			changeColor(this, sf::Color::Green);
@@ -66,28 +65,24 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			int i = int(sf::Mouse::getPosition(window).x) / 100, j = int(sf::Mouse::getPosition(window).y) / 100;
 			if (_thisGame->getBoardElement(i, j).front() == this->_color.front())
 			{
-				std::cout << "similar colors\n";
 				this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);	
 			}
 			if(_thisGame->getBoardElement(i, j).front() != this->_color.front()
 				&& _thisGame->getBoardElement(i, j) != "empty")
 			{
-				std::cout << "attack\n";
 				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
 				_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
 				_thisGame->setBoardElement(i, j, std::string("empty"));
-				//_thisGame->setBoardElement(i, j, this->_color + this->_name);
 
 			}
 			if (_thisGame->getBoardElement(i, j) == "empty")
 			{
-				std::cout << "moving\n";
-				this->_oldPos = this->_sprite.getPosition();
-				this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
 				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+				this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
 				this->_newPos = this->_sprite.getPosition();
 				_thisGame->setBoardElement(i, j, this->_color + this->_name);
 			}
+			this->_oldPos = this->_sprite.getPosition();
 			_thisGame->printBoard();
 		}
 	}
