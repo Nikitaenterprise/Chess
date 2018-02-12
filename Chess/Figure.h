@@ -16,6 +16,7 @@ public:
 	bool canMoveToThisPlace(int i, int j);
 	bool logic(int i, int j);
 
+	Figure *figurePtr = this;
 	bool isMove = false;
 	bool isFirsTimeMoving = true;
 	std::string _name;

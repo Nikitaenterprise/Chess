@@ -17,6 +17,7 @@ Figure::Figure(const std::string &name, const std::string &color)
 
 Figure::~Figure()
 {
+	std::cout << this->_name << std::endl;
 }
 
 void Figure::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -54,7 +55,8 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 		sf::Event::MouseButtonReleased &&
 		event.mouseButton.button == sf::Mouse::Left)
 	{
-		if (this->_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f> (sf::Mouse::getPosition(window))))
+		if (this->_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f> (sf::Mouse::getPosition(window)))
+			&& this->isMove)
 		{
 			this->isMove = false;
 			changeColor(this, sf::Color::White);
@@ -72,7 +74,11 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			}
 			else if(_thisGame->getBoardElement(i, j).front() != this->_color.front())
 			{
+				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+				_thisGame->setBoardElement(i, j, std::string("empty"));
+				_thisGame->setBoardElement(i, j, this->_color + this->_name);
 				_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
+
 			}
 			_thisGame->printBoard();
 		}

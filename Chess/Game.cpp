@@ -50,7 +50,18 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 	sf::Vector2i pos;
 	std::vector<std::string> figuresName = { "pawn", "castle", "knight", "bishop", "queen", "king" };
 	std::vector<std::string> figuresColor = { "w", "b" };
-	for (auto it1 = figuresColor.begin(); it1 != figuresColor.end(); it1++)
+	for (auto &color : figuresColor)
+	{
+		for (auto &name : figuresName)
+		{
+			if(name == "pawn")
+				for (int l = 0; l < 8; l++)	getStartCoord.setFigure(_figures, name, color, pos, k);
+			else if (name == "king" || name == "queen") getStartCoord.setFigure(_figures, name, color, pos, k);
+			else if (name == "castle" || name == "knight" || name == "bishop")
+				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, name, color, pos, k);
+		}
+	}
+	/*for (auto it1 = figuresColor.begin(); it1 != figuresColor.end(); it1++)
 	{
 		for (auto it2 = figuresName.begin(); it2 != figuresName.end(); it2++)
 		{
@@ -60,8 +71,9 @@ Game::Game() : _window(sf::VideoMode(WIDTH, HEIGHT),"Game")
 			else if (*it2 == "castle" || *it2 == "knight" || *it2 == "bishop")
 				for (int l = 0; l < 2; l++)	getStartCoord.setFigure(_figures, *it2, *it1, pos, k);
 		}
-	}
-	for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setGamePtr(this);
+	}*/
+	for (auto &obj : _figures) obj->setGamePtr(this);
+	//for (auto it = _figures.begin(); it != _figures.end(); it++) (*it)->setGamePtr(this);
 }
 
 Game::~Game()
@@ -90,23 +102,27 @@ void Game::run(int minimumFramePerSeconds)
 
 Figure & Game::getBoardFigure(int i, int j)
 {
-	for (auto it = _figures.begin(); it != _figures.end(); it++)
+	for (auto &obj : _figures)
+	{
+		if (static_cast<int>(obj->_oldPos.x / 100) == i && static_cast<int>(obj->_oldPos.y / 100) == j)
+			return *obj;
+	}
+	/*for (auto it = _figures.begin(); it != _figures.end(); it++)
 	{
 		if (static_cast<int>((*it)->_oldPos.x / 100) == i && static_cast<int>((*it)->_oldPos.y / 100) == j)
 			return *(*it);
-	}
+	}*/
 }
 
 void Game::deleteFigure(Figure  *figure)
 {
 	for (auto it = _figures.begin(); it != _figures.end(); it++)
 	{
-		Figure *itTemp = *it;
-		if (itTemp == figure)
+		if ((*it) == figure)
 		{
 			it = _figures.erase(it);
-			delete itTemp;
-			std::cout << "deleted" << std::endl;
+			std::cout << "deleted " << figure->figurePtr << std::endl;
+			figure->~Figure();
 		}
 	}
 }
@@ -133,7 +149,9 @@ void Game::processEvents()
 
 		_field.processEvents(event, _window);
 		//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->processEvents(event, _window);
-		for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->processEvents(event, _window);
+		for (auto &obj : _figures) obj->processEvents(event, _window);
+		//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->processEvents(event, _window);
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) system("cls");
 	}
 }
 
@@ -141,7 +159,8 @@ void Game::update(sf::Time deltaTime)
 {
 	_field.update(deltaTime);
 	//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->update(deltaTime);
-	for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->update();
+	for (auto &obj : _figures)	obj->update();
+	//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->update();
 }
 
 void Game::render()
@@ -149,6 +168,7 @@ void Game::render()
 	_window.clear();
 	_window.draw(_field);
 	//for (auto it = _field.begin(); it != _field.end(); it++) (*it)->draw(_window);
-	for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->draw(_window);
+	for (auto &obj : _figures)	obj->draw(_window);
+	//for (auto it = _figures.begin(); it != _figures.end(); it++)	(*it)->draw(_window);
 	_window.display();
 }
