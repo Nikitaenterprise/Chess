@@ -63,26 +63,31 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			this->isMove = false;
 			changeColor(this, sf::Color::White);
 			int i = int(sf::Mouse::getPosition(window).x) / 100, j = int(sf::Mouse::getPosition(window).y) / 100;
-			if (_thisGame->getBoardElement(i, j).front() == this->_color.front())
-			{
-				this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);	
-			}
-			if(_thisGame->getBoardElement(i, j).front() != this->_color.front()
-				&& _thisGame->getBoardElement(i, j) != "empty")
-			{
-				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
-				_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
-				_thisGame->setBoardElement(i, j, std::string("empty"));
-
-			}
-			if (_thisGame->getBoardElement(i, j) == "empty")
-			{
-				_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
-				this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
-				this->_newPos = this->_sprite.getPosition();
-				_thisGame->setBoardElement(i, j, this->_color + this->_name);
-			}
 			std::cout << logic(i, j) << std::endl;
+			if (logic(i, j))
+			{
+
+				if (_thisGame->getBoardElement(i, j).front() == this->_color.front())
+				{
+					this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);	
+				}
+				if(_thisGame->getBoardElement(i, j).front() != this->_color.front()
+					&& _thisGame->getBoardElement(i, j) != "empty")
+				{
+					_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+					_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
+					_thisGame->setBoardElement(i, j, std::string("empty"));
+
+				}
+				if (_thisGame->getBoardElement(i, j) == "empty")
+				{
+					_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+					this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
+					this->_newPos = this->_sprite.getPosition();
+					_thisGame->setBoardElement(i, j, this->_color + this->_name);
+				}
+			}
+			else this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);
 			this->_oldPos = this->_sprite.getPosition();
 			_thisGame->printBoard();
 		}
