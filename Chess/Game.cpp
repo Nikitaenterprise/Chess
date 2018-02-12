@@ -138,7 +138,7 @@ void Game::processEvents()
 				&& event.key.code == sf::Keyboard::Escape))	_window.close();
 
 		_field.processEvents(event, _window);
-		for (const auto obj : _figures) obj->processEvents(event, _window);
+		for(auto it = _figures.begin(); it != _figures.end(); ++it) (*it)->processEvents(event, _window);
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) system("cls");
 	}
 }
