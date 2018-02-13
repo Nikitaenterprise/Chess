@@ -231,10 +231,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 	case 0:
 			if (i < iOld)
 			{
-				for (int m = i; m < iOld; m++)
+				for (int m = i + 1; m < iOld; m++)
 				{
-						std::cout << "we are here\n";
-					if (_thisGame->getBoardElement(i, j) != "empty") break;
 					if (_thisGame->getBoardElement(m, j) != "empty")
 					{
 						canMove = false;
@@ -244,9 +242,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 			}
 			if (i > iOld)
 			{
-				for (int m = i; m > iOld; m--)
+				for (int m = i - 1; m > iOld; m--)
 				{
-					if (_thisGame->getBoardElement(i, j) != "empty") break;
 					if (_thisGame->getBoardElement(m, j) != "empty")
 					{
 						canMove = false;
@@ -258,9 +255,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 	case 1:
 		if (j < jOld)
 		{
-			for (int m = j; m < jOld; m++)
+			for (int m = j + 1; m < jOld; m++)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(i, m) != "empty")
 				{
 					canMove = false;
@@ -270,9 +266,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 		}
 		if (j > jOld)
 		{
-			for (int m = j; m > jOld; m--)
+			for (int m = j - 1; m > jOld; m--)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(i, m) != "empty")
 				{
 					canMove = false;
@@ -284,9 +279,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 	case 2:
 		if (i < iOld && j < jOld)
 		{
-			for (int m = i, n = j; m < iOld && n < jOld; m++, n++)
+			for (int m = i + 1, n = j + 1; m < iOld && n < jOld; m++, n++)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(m, n) != "empty")
 				{
 					canMove = false;
@@ -296,9 +290,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 		}
 		if (i > iOld && j > jOld)
 		{
-			for (int m = i, n = j; m > iOld && n > jOld; m--, n--)
+			for (int m = i - 1, n = j - 1; m > iOld && n > jOld; m--, n--)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(m, n) != "empty")
 				{
 					canMove = false;
@@ -310,9 +303,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 	case 3:
 		if (i < iOld && j > jOld)
 		{
-			for (int m = i, n = j; m < iOld && n > jOld; m++, n--)
+			for (int m = i + 1, n = j - 1; m < iOld && n > jOld; m++, n--)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(m, n) != "empty")
 				{
 					canMove = false;
@@ -322,9 +314,8 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 		}
 		if (i > iOld && j < jOld)
 		{
-			for (int m = i, n = j; m > iOld && n < jOld; m--, n++)
+			for (int m = i - 1, n = j + 1; m > iOld && n < jOld; m--, n++)
 			{
-				if (_thisGame->getBoardElement(i, j) != "empty") break;
 				if (_thisGame->getBoardElement(m, n) != "empty")
 				{
 					canMove = false;
