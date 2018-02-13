@@ -15,14 +15,6 @@ Figure::Figure(const std::string &name, const std::string &color)
 	_sprite.setScale(float(0.2), float(0.2));
 }
 
-//Figure::~Figure()
-//{
-//	std::cout << this->_name << std::endl;
-//	std::cout << this->_color << std::endl;
-//	std::cout << this << std::endl;
-//	//delete this;
-//}
-
 void Figure::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(_sprite, states);
@@ -46,7 +38,6 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 		if (this->_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f> (sf::Mouse::getPosition(window))))
 		{
 			this->isMove = true;
-			this->isFirsTimeMoving = false;
 			this->dPos = sf::Vector2f(0, 0);
 			this->dPos = static_cast<sf::Vector2f> (sf::Mouse::getPosition(window)) -
 							this->pos - sf::Vector2f(this->_sprite.getGlobalBounds().width/2, this->_sprite.getGlobalBounds().height / 2);
@@ -63,32 +54,11 @@ void Figure::processEvents(sf::Event &event, const sf::Window &window)
 			this->isMove = false;
 			changeColor(this, sf::Color::White);
 			int i = int(sf::Mouse::getPosition(window).x) / 100, j = int(sf::Mouse::getPosition(window).y) / 100;
-			std::cout << logic(i, j) << std::endl;
-			if (logic(i, j))
+			if (canMoveHere(i, j))
 			{
-
-				if (_thisGame->getBoardElement(i, j).front() == this->_color.front())
-				{
-					this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);	
-				}
-				if(_thisGame->getBoardElement(i, j).front() != this->_color.front()
-					&& _thisGame->getBoardElement(i, j) != "empty")
-				{
-					_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
-					_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
-					_thisGame->setBoardElement(i, j, std::string("empty"));
-
-				}
-				if (_thisGame->getBoardElement(i, j) == "empty")
-				{
-					_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
-					this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
-					this->_newPos = this->_sprite.getPosition();
-					_thisGame->setBoardElement(i, j, this->_color + this->_name);
-				}
+				move(i, j);
 			}
 			else this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);
-			this->_oldPos = this->_sprite.getPosition();
 			_thisGame->printBoard();
 		}
 	}
@@ -104,9 +74,29 @@ void Figure::update()
 	}
 }
 
-void Figure::updateCoordinates(sf::Vector2i &pos)
+void Figure::move(int i, int j)
 {
-	
+	if (_thisGame->getBoardElement(i, j).front() == this->_color.front())
+	{
+		this->_sprite.setPosition(this->_oldPos.x, this->_oldPos.y);
+	}
+	if (_thisGame->getBoardElement(i, j).front() != this->_color.front()
+		&& _thisGame->getBoardElement(i, j) != "empty")
+	{
+		_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+		_thisGame->deleteFigure(&_thisGame->getBoardFigure(i, j));
+		_thisGame->setBoardElement(i, j, std::string("empty"));
+
+	}
+	if (_thisGame->getBoardElement(i, j) == "empty")
+	{
+		_thisGame->setBoardElement(int(this->_oldPos.x / 100), int(this->_oldPos.y / 100), std::string("empty"));
+		this->_sprite.setPosition(sf::Vector2f(i * 100, j * 100));
+		this->_newPos = this->_sprite.getPosition();
+		_thisGame->setBoardElement(i, j, this->_color + this->_name);
+	}
+	this->isFirsTimeMoving = false;
+	this->_oldPos = this->_sprite.getPosition();
 }
 
 void Figure::changeColor(Figure *that, const sf::Color &color)
@@ -114,19 +104,9 @@ void Figure::changeColor(Figure *that, const sf::Color &color)
 	that->_sprite.setColor(color);
 }
 
-void Figure::setOrigin()
+bool Figure::canMoveHere(int i, int j)
 {
-	_sprite.setOrigin(sf::Vector2f());
-}
-
-bool Figure::canMoveToThisPlace(int i, int j)
-{
-	if (_thisGame->getBoardElement(i, j) == "empty") return true;
-	else return false;
-}
-
-bool Figure::logic(int i, int j)
-{
+	enum line { horizontal, vertical, diagonalL, diagonalR };
 	bool canMove = false;
 	int colorVariable = 1;
 	int iOld = static_cast<int> (this->_oldPos.x / 100);
@@ -136,9 +116,17 @@ bool Figure::logic(int i, int j)
 
 	if (this->_name == "pawn")
 	{
-		if ((i - iOld == 0 && j - jOld == -1 * colorVariable)
-			||	((i - iOld == -1 * colorVariable || i - iOld == 1 * colorVariable)
-				&& j - jOld == -1 * colorVariable)) canMove = true;
+		if (this->isFirsTimeMoving && i - iOld == 0 && j - jOld == -2 * colorVariable)
+		{
+			this->isFirsTimeMoving = false;
+			canMove = true;
+		}
+		if (i - iOld == 0 && j - jOld == -1 * colorVariable) canMove = true;
+		if ((i - iOld == -1 * colorVariable || i - iOld == 1 * colorVariable)
+			&& j - jOld == -1 * colorVariable)
+		{
+			if (_thisGame->getBoardElement(i, j) != "empty") canMove = true;
+		}
 	}
 	if (this->_name == "king")
 	{
@@ -150,6 +138,25 @@ bool Figure::logic(int i, int j)
 			||	(i - iOld == -1 * colorVariable && j - jOld == 1 * colorVariable) 
 			||	(i - iOld == -1 * colorVariable && j - jOld == 0) 
 			||	(i - iOld == -1 * colorVariable && j - jOld == -1 * colorVariable)) canMove = true;
+
+		switch (i)
+		{
+		case 2:
+			if (this->isFirsTimeMoving && checkLine(i - 1, j, iOld, jOld, line::horizontal))
+			{
+				_thisGame->getBoardFigure(i - 2, j).move(i + 1, j);
+				canMove = true;
+			}
+			break;
+		case 6:
+			if (this->isFirsTimeMoving && checkLine(i, j, iOld, jOld, line::horizontal))
+			{
+				_thisGame->getBoardFigure(i + 1, j).move(i - 1, j);
+				canMove = true;
+			}
+			break;
+		}
+		
 	}
 	if (this->_name == "knight")
 	{
@@ -162,7 +169,6 @@ bool Figure::logic(int i, int j)
 			||	(i - iOld == -2 * colorVariable && j - jOld == -1 * colorVariable)
 			||	(i - iOld == -1 * colorVariable && j - jOld == -2 * colorVariable)) canMove = true;
 	}
-	enum line{ horizontal, vertical, diagonalL, diagonalR };
 	if (this->_name == "castle")
 	{
 		if (j - jOld == 0)
@@ -227,6 +233,7 @@ bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
 			{
 				for (int m = i; m < iOld; m++)
 				{
+						std::cout << "we are here\n";
 					if (_thisGame->getBoardElement(i, j) != "empty") break;
 					if (_thisGame->getBoardElement(m, j) != "empty")
 					{
