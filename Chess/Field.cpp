@@ -3,10 +3,6 @@
 
 Field::Field()
 {
-	/*_image.loadFromFile("../Chess/Images/chessboard.png");
-	_texture.loadFromImage(_image);
-	_sprite.setTexture(_texture);
-	std::cout << "hi\n";*/
 	for (int i = 0; i < 8*8; i++)
 	{
 		_fieldElement.push_back(new sf::RectangleShape(sf::Vector2f(800 / 8, 800 / 8)));
@@ -18,13 +14,13 @@ Field::Field()
 	{
 		if (inverse == 1)
 		{
-			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::Yellow);
+			if (i % 2 == 0)	(*it)->setFillColor(sf::Color(137, 125, 114));
 			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::White);
 		}
 		else if (inverse == -1)
 		{
 			if (i % 2 == 0)	(*it)->setFillColor(sf::Color::White);
-			else if (i % 2 != 0) (*it)->setFillColor(sf::Color::Yellow);
+			else if (i % 2 != 0) (*it)->setFillColor(sf::Color(137, 125, 114));
 		}
 		(*it)->setPosition(sf::Vector2f(i * 800.0f / 8, j * 800.0f / 8));
 
