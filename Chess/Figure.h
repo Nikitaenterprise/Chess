@@ -15,6 +15,7 @@ public:
 	void setOrigin();
 	bool canMoveToThisPlace(int i, int j);
 	bool logic(int i, int j);
+	bool checkLine(int i, int j, int iOld, int jOld, int line);
 
 	Figure *figurePtr = this;
 	bool isMove = false;

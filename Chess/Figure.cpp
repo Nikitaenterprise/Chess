@@ -162,24 +162,171 @@ bool Figure::logic(int i, int j)
 			||	(i - iOld == -2 * colorVariable && j - jOld == -1 * colorVariable)
 			||	(i - iOld == -1 * colorVariable && j - jOld == -2 * colorVariable)) canMove = true;
 	}
+	enum line{ horizontal, vertical, diagonalL, diagonalR };
 	if (this->_name == "castle")
 	{
-		if ((7 - i >= 0 && j - jOld == 0)
-			||	(i - iOld == 0 && 7 - j >= 0)) canMove = true;
+		if (j - jOld == 0)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::horizontal);
+		}
+		if (i - iOld == 0)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::vertical);
+		}
 	}
 	if (this->_name == "bishop")
 	{
-		if ((i - iOld == j - jOld)
-			||	(i - iOld == (j - jOld) * -1)
-			||	((i - iOld) * -1 == j - jOld)) canMove = true;
+		if (i - iOld == j - jOld)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::diagonalL);
+		}
+		if (i - iOld == (j - jOld) * -1
+			||	(i - iOld) * -1 == j - jOld)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::diagonalR);
+		}
 	}
 	if (this->_name == "queen")
 	{
-		if ((7 - i >= 0 && j - jOld == 0)
-			|| (i - iOld == 0 && 7 - j >= 0)
-			||	(i - iOld == j - jOld)
-			|| (i - iOld == (j - jOld) * -1)
-			|| ((i - iOld) * -1 == j - jOld)) canMove = true;
+		if (j - jOld == 0)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::horizontal);
+		}
+		if (i - iOld == 0)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::vertical);
+		}
+		if (i - iOld == j - jOld)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::diagonalL);
+		}
+		if (i - iOld == (j - jOld) * -1
+			||	(i - iOld) * -1 == j - jOld)
+		{
+			canMove = true;
+			canMove = checkLine(i, j, iOld, jOld, line::diagonalR);
+		}
 	}
+	return canMove;
+}
+
+bool Figure::checkLine(int i, int j, int iOld, int jOld, int line)
+{
+	bool canMove = true;
+	switch (line)
+	{
+	case 0:
+			if (i < iOld)
+			{
+				for (int m = i; m < iOld; m++)
+				{
+					if (_thisGame->getBoardElement(i, j) != "empty") break;
+					if (_thisGame->getBoardElement(m, j) != "empty")
+					{
+						canMove = false;
+						break;
+					}
+				}
+			}
+			if (i > iOld)
+			{
+				for (int m = i; m > iOld; m--)
+				{
+					if (_thisGame->getBoardElement(i, j) != "empty") break;
+					if (_thisGame->getBoardElement(m, j) != "empty")
+					{
+						canMove = false;
+						break;
+					}
+				}
+			}
+		break;
+	case 1:
+		if (j < jOld)
+		{
+			for (int m = j; m < jOld; m++)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(i, m) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		if (j > jOld)
+		{
+			for (int m = j; m > jOld; m--)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(i, m) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		break;
+	case 2:
+		if (i < iOld && j < jOld)
+		{
+			for (int m = i, n = j; m < iOld && n < jOld; m++, n++)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(m, n) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		if (i > iOld && j > jOld)
+		{
+			for (int m = i, n = j; m > iOld && n > jOld; m--, n--)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(m, n) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		break;
+	case 3:
+		if (i < iOld && j > jOld)
+		{
+			for (int m = i, n = j; m < iOld && n > jOld; m++, n--)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(m, n) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		if (i > iOld && j < jOld)
+		{
+			for (int m = i, n = j; m > iOld && n < jOld; m--, n++)
+			{
+				if (_thisGame->getBoardElement(i, j) != "empty") break;
+				if (_thisGame->getBoardElement(m, n) != "empty")
+				{
+					canMove = false;
+					break;
+				}
+			}
+		}
+		break;
+	}
+	
 	return canMove;
 }
